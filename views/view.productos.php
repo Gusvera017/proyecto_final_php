@@ -11,9 +11,55 @@
 </head>
 
 <body>
-    <div class="container-fluid mt-5 pt-1">
+    <div class="container-fluid mt-5 mb-5 pt-1 pb-1">
         <?php include("./views/layouts/header.php"); ?>
         <h1 class="tac">HOLA SOY LA PAGINA DE PRODUCTOS</h1>
+        <!-- comienzo prueba cards -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card">
+                        <img class="card-img-top" src="https://www.w3schools.com/bootstrap4/img_avatar1.png" alt="">
+                        <div class="card-body">
+                            <h4 class="card-title">Title</h4>
+                            <p class="card-text">Text</p>
+                            <a name="" id="" class="btn btn-primary" href="#" role="button">Ver Mas</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <img class="card-img-top" src="https://www.w3schools.com/bootstrap4/img_avatar1.png" alt="">
+                        <div class="card-body">
+                            <h4 class="card-title">Title</h4>
+                            <p class="card-text">Text</p>
+                            <a name="" id="" class="btn btn-primary" href="#" role="button">Ver Mas</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <img class="card-img-top" src="https://www.w3schools.com/bootstrap4/img_avatar1.png" alt="">
+                        <div class="card-body">
+                            <h4 class="card-title">Title</h4>
+                            <p class="card-text">Text</p>
+                            <a name="" id="" class="btn btn-primary" href="#" role="button">Ver Mas</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <img class="card-img-top" src="https://www.w3schools.com/bootstrap4/img_avatar1.png" alt="">
+                        <div class="card-body">
+                            <h4 class="card-title">Title</h4>
+                            <p class="card-text">Text</p>
+                            <a name="" id="" class="btn btn-primary" href="#" role="button">Ver Mas</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Fin prueba cards -->
         <?php include("./views/layouts/footer.php"); ?>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>

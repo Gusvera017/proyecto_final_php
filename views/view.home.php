@@ -11,9 +11,8 @@
 </head>
 
 <body>
-    <div class="container-fluid mt-5 pt-1">
+    <div class="container-fluid mt-5 mb-5 pt-1 pb-1">
         <?php include("./views/layouts/header.php"); ?>
-        <!-- revisar el container porque no se ve el Home -->
         <h1>Home</h1>
         <?php include("./views/layouts/footer.php"); ?>
     </div>
