@@ -7,12 +7,9 @@ $user="root";
 $pass="";
 
 try {
-        $conexion=new PDO("mysql:host=$host;dbname=$bd",$user,$pass);
-        if ($conexion) { 
-            echo "Conexion exitosa";
-        } 
-    } catch (Exception $exeption){
-    echo $exeption->getMessage();
+        $conexion=new PDO("mysql:host=$host;dbname=$bd",$user,$pass); 
+    } catch (Exception $exception) {
+        echo $exception->getMessage();
 }
 
 ?>

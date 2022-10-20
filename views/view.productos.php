@@ -1,6 +1,5 @@
 <?php include("./views/layouts/header.php"); ?>
 <h1 class="tac">HOLA SOY LA PAGINA DE PRODUCTOS</h1>
-<!-- comienzo prueba cards -->
 <div class="container">
     <div class="row">
         <div class="col-md-3">
@@ -45,5 +44,4 @@
         </div>
     </div>
 </div>
-<!-- Fin prueba cards -->
 <?php include("./views/layouts/footer.php"); ?>
