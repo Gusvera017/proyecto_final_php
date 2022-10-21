@@ -1,6 +1,5 @@
 <?php
 
-/* $conexion = mysqli_connect("localhost:3333", "root", "", "proyecto_final_php") or exit("Fallo la conexión a la base de datos"); */
 $host="localhost:3333";
 $bd="proyecto_final_php";
 $user="root";

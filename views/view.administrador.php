@@ -11,11 +11,20 @@ include("./models/models.conexionbd.php");
 
 switch($accion){
     case "Agregar":
-        /* mysqli_query($conexion, "INSERT INTO `productos` (`id`, `nombre`, `descripcion`, `imagen`) VALUES (NULL, '$nombre_form', '$descripcion_form', '$imagen_form')"); */
         $querySQL = $conexion->prepare("INSERT INTO productos (nombre,descripcion,imagen) VALUES (:nombre,:descripcion,:imagen);");
         $querySQL->bindParam(':nombre',$nombre_form);
         $querySQL->bindParam(':descripcion',$descripcion_form);
-        $querySQL->bindParam(':imagen',$imagen_form);
+        
+        $fecha = new DateTime();
+        $nombreArchivo=($imagen_form!="")?$fecha->getTimestamp()."_".$_FILES["imagen"]["name"]:"imagen.jpg";
+        
+        $tmpImagen=$_FILES["imagen"]["tmp_name"];
+
+        if($tmpImagen!=""){
+            move_uploaded_file($tmpImagen, "./views/img/".$nombreArchivo);
+        }
+
+        $querySQL->bindParam(':imagen',$nombreArchivo);
         $querySQL->execute();
         echo '  <br/>
                 <div class="alert alert-success d-flex align-items-center" role="alert">
@@ -25,13 +34,41 @@ switch($accion){
                 </div>';
         break;
     case "Editar":
-        echo "Presionado botón editar";
+
+        $querySQL = $conexion->prepare("UPDATE productos SET nombre=:nombre,descripcion=:descripcion WHERE id=:id");
+        $querySQL->bindParam(':id',$ID_form);
+        $querySQL->bindParam(':nombre',$nombre_form);
+        $querySQL->bindParam(':descripcion',$descripcion_form);
+        $querySQL->execute();
+
+        if($imagen_form!=""){
+            $querySQL = $conexion->prepare("UPDATE productos SET nombre=:nombre,descripcion=:descripcion,imagen=:imagen WHERE id=:id");
+            $querySQL->bindParam(':id',$ID_form);
+            $querySQL->bindParam(':nombre',$nombre_form);
+            $querySQL->bindParam(':descripcion',$descripcion_form);
+            $querySQL->bindParam(':imagen',$imagen_form);
+            $querySQL->execute();
+        }
+        echo '  <br/>
+                <div class="alert alert-warning d-flex align-items-center" role="alert">
+                    <div>
+                        El Producto se modificó correctamente.
+                    </div>
+                </div>';
+        break;
         break;
     case "Cancelar":
         echo "Presionado botón cancelar";
         break;
     case "Seleccionar":
-        echo "Presionado botón seleccionar";
+        $querySQL = $conexion->prepare("SELECT * FROM productos WHERE id=:id");
+        $querySQL->bindParam(':id',$ID_form);
+        $querySQL->execute();
+        $producto=$querySQL->fetch(PDO::FETCH_LAZY);
+
+        $nombre_form=$producto['nombre'];
+        $descripcion_form=$producto['descripcion'];
+        $imagen_form=$producto['imagen'];
         break;
     case "Borrar":
         $querySQL = $conexion->prepare("DELETE FROM productos WHERE id=:id");
@@ -63,18 +100,21 @@ $listadoProductos=$querySQL->fetchAll(PDO::FETCH_ASSOC);
                     <form method="POST" enctype="multipart/form-data">
                         <div class="form-group mb-3">
                             <label for="ID">ID</label>
-                            <input type="text" class="form-control" name="ID" id="ID" placeholder="ID">
+                            <input type="text" class="form-control" value="<?php echo $ID_form;?>" name="ID" id="ID" placeholder="ID">
                         </div>
                         <div class="form-group mb-3">
                             <label for="nombre">Nombre</label>
-                            <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre del producto">
+                            <input type="text" class="form-control" value="<?php echo $nombre_form;?>"name="nombre" id="nombre" placeholder="Nombre del producto">
                         </div>
                         <div class="form-group mb-3">
                             <label for="descripcion">Descripcion</label>
-                            <input type="text" class="form-control" name="descripcion" id="descripcion" placeholder="Descripcion del producto">
+                            <input type="text" class="form-control" value="<?php echo $descripcion_form;?>" name="descripcion" id="descripcion" placeholder="Descripcion del producto">
                         </div>
                         <div class="form-group mb-3">
                             <label for="file">Imagen</label>
+
+                            <?php echo $imagen_form;?>
+
                             <input type="file" class="form-control" name="imagen" id="nombre" placeholder="ID">
                         </div>
                         <div class="btn-group" role="group" aria-label="">
