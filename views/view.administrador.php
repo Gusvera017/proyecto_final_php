@@ -42,11 +42,26 @@ switch($accion){
         $querySQL->execute();
 
         if($imagen_form!=""){
-            $querySQL = $conexion->prepare("UPDATE productos SET nombre=:nombre,descripcion=:descripcion,imagen=:imagen WHERE id=:id");
+
+            $fecha = new DateTime();
+            $nombreArchivo=($imagen_form!="")?$fecha->getTimestamp()."_".$_FILES["imagen"]["name"]:"imagen.jpg";
+            $tmpImagen=$_FILES["imagen"]["tmp_name"];
+            move_uploaded_file($tmpImagen, "./views/img/".$nombreArchivo);
+
+            $querySQL = $conexion->prepare("SELECT imagen FROM productos WHERE id=:id");
             $querySQL->bindParam(':id',$ID_form);
-            $querySQL->bindParam(':nombre',$nombre_form);
-            $querySQL->bindParam(':descripcion',$descripcion_form);
-            $querySQL->bindParam(':imagen',$imagen_form);
+            $querySQL->execute();
+            $producto=$querySQL->fetch(PDO::FETCH_LAZY);
+
+            if(isset($producto["imagen"])&&($producto["imagen"]!="imagen.jpg")){
+                if(file_exists("./views/img/".$producto["imagen"])){
+                    unlink("./views/img/".$producto["imagen"]);
+                }
+            }
+
+            $querySQL = $conexion->prepare("UPDATE productos SET imagen=:imagen WHERE id=:id");
+            $querySQL->bindParam(':id',$ID_form);
+            $querySQL->bindParam(':imagen',$nombreArchivo);
             $querySQL->execute();
         }
         echo '  <br/>
@@ -56,9 +71,8 @@ switch($accion){
                     </div>
                 </div>';
         break;
-        break;
     case "Cancelar":
-        echo "Presionado botón cancelar";
+        header("Location:administrador.php");
         break;
     case "Seleccionar":
         $querySQL = $conexion->prepare("SELECT * FROM productos WHERE id=:id");
@@ -71,6 +85,17 @@ switch($accion){
         $imagen_form=$producto['imagen'];
         break;
     case "Borrar":
+        $querySQL = $conexion->prepare("SELECT imagen FROM productos WHERE id=:id");
+        $querySQL->bindParam(':id',$ID_form);
+        $querySQL->execute();
+        $producto=$querySQL->fetch(PDO::FETCH_LAZY);
+
+        if(isset($producto["imagen"])&&($producto["imagen"]!="imagen.jpg")){
+            if(file_exists("./views/img/".$producto["imagen"])){
+                unlink("./views/img/".$producto["imagen"]);
+            }
+        }
+        
         $querySQL = $conexion->prepare("DELETE FROM productos WHERE id=:id");
         $querySQL->bindParam(':id',$ID_form);
         $querySQL->execute();
@@ -100,27 +125,31 @@ $listadoProductos=$querySQL->fetchAll(PDO::FETCH_ASSOC);
                     <form method="POST" enctype="multipart/form-data">
                         <div class="form-group mb-3">
                             <label for="ID">ID</label>
-                            <input type="text" class="form-control" value="<?php echo $ID_form;?>" name="ID" id="ID" placeholder="ID">
+                            <input type="text" required readonly class="form-control" value="<?php echo $ID_form;?>" name="ID" id="ID" placeholder="ID">
                         </div>
                         <div class="form-group mb-3">
                             <label for="nombre">Nombre</label>
-                            <input type="text" class="form-control" value="<?php echo $nombre_form;?>"name="nombre" id="nombre" placeholder="Nombre del producto">
+                            <input type="text" required class="form-control" value="<?php echo $nombre_form;?>"name="nombre" id="nombre" placeholder="Nombre del producto">
                         </div>
                         <div class="form-group mb-3">
                             <label for="descripcion">Descripcion</label>
-                            <input type="text" class="form-control" value="<?php echo $descripcion_form;?>" name="descripcion" id="descripcion" placeholder="Descripcion del producto">
+                            <input type="text" required class="form-control" value="<?php echo $descripcion_form;?>" name="descripcion" id="descripcion" placeholder="Descripcion del producto">
                         </div>
                         <div class="form-group mb-3">
                             <label for="file">Imagen</label>
-
+                            
                             <?php echo $imagen_form;?>
+
+                            <?php if($imagen_form!=""){ ?>
+                                <img class="img-thumbnail" src="./views/img/<?php echo $imagen_form; ?>" width="50" alt="imagen.jpg" srcset="">
+                            <?php } ?>
 
                             <input type="file" class="form-control" name="imagen" id="nombre" placeholder="ID">
                         </div>
                         <div class="btn-group" role="group" aria-label="">
-                            <button type="submit" name="accion" value="Agregar" class="btn btn-success">Agregar</button>
-                            <button type="submit" name="accion" value="Editar" class="btn btn-warning">Editar</button>
-                            <button type="submit" name="accion" value="Cancelar" class="btn btn-danger">Cancelar</button>
+                            <button type="submit" name="accion" <?php echo($accion=="Seleccionar")?"disabled":""; ?> value="Agregar" class="btn btn-success">Agregar</button>
+                            <button type="submit" name="accion" <?php echo($accion!="Seleccionar")?"disabled":""; ?> value="Editar" class="btn btn-warning">Editar</button>
+                            <button type="submit" name="accion" <?php echo($accion!="Seleccionar")?"disabled":""; ?> value="Cancelar" class="btn btn-danger">Cancelar</button>
                         </div>
                     </form>
                 </div>
@@ -143,7 +172,9 @@ $listadoProductos=$querySQL->fetchAll(PDO::FETCH_ASSOC);
                         <td><?php echo $prod['id']; ?></td>
                         <td><?php echo $prod['nombre']; ?></td>
                         <td><?php echo $prod['descripcion']; ?></td>
-                        <td><?php echo $prod['imagen']; ?></td>
+                        <td>
+                            <img class="img-thumbnail" src="./views/img/<?php echo $prod['imagen']; ?>" width="50" alt="imagen.jpg" srcset="">
+                        </td>
                         <td>
                             <form method="POST">
                                 <input type="hidden" name="ID" id="ID" value="<?php echo $prod['id']; ?>"/>
