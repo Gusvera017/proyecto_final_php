@@ -2,10 +2,7 @@
 <?php 
 
 include("./models/models.conexionbd.php"); 
-
-$querySQL = $conexion->prepare("SELECT * FROM productos");
-$querySQL->execute();
-$listadoProductos=$querySQL->fetchAll(PDO::FETCH_ASSOC);
+include("./models/models.productos.php"); 
 
 ?>
 
@@ -19,7 +16,7 @@ $listadoProductos=$querySQL->fetchAll(PDO::FETCH_ASSOC);
                 <div class="card-body">
                     <h4 class="card-title"><?php echo $prod['nombre']; ?></h4>
                     <p class="card-text"><?php echo $prod['descripcion']; ?></p>
-                    <a name="" id="" class="btn btn-primary" href="#" role="button">Ver Mas</a>
+                    <a name="" id="" class="btn btn-primary" href="producto.php?id=<?php echo $prod['id']; ?>" role="button">Ver Mas</a>
                 </div>
             </div>
         </div>
