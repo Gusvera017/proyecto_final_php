@@ -30,11 +30,11 @@ Estructura de las carpetas(*) y los archivos(+):
     * layouts
         + footer.php
         + header.php
-    + models.administrador.php
-    + models.contacto.php
-    + models.index.php
-    + models.producto.php
-    + models.productos.php
+    + view.administrador.php
+    + view.contacto.php
+    + view.index.php
+    + view.producto.php
+    + view.productos.php
 + administrador.php
 + contacto.php
 + index.php
