@@ -4,17 +4,22 @@
     <div class="carousel-inner">
         <div class="carousel-item active">
             <a href="productos.php">
-                <img src="https://i.pinimg.com/originals/49/06/6c/49066cd709a43dcc797134a62b6eb91f.jpg" class="d-block w-100" alt="imagen.jpg">
+                <img src="https://www.cdmarket.com.ar/Pubs/Sites/Default/Custom/prox-xs.jpg" class="d-block w-100" alt="imagen.jpg">
             </a>
         </div>
         <div class="carousel-item">
         <a href="productos.php">
-                <img src="https://i.pinimg.com/originals/20/48/b7/2048b7e14f93bd7800dabf47ce874ccd.jpg" class="d-block w-100" alt="imagen.jpg">
+                <img src="https://www.cdmarket.com.ar/Pubs/Sites/Default/Custom/ofertas-5999-xs.jpg" class="d-block w-100" alt="imagen.jpg">
             </a>
         </div>
         <div class="carousel-item">
         <a href="productos.php">
-                <img src="https://i.pinimg.com/originals/e7/66/86/e76686d11259a2d0d8ae5dc2c1c61025.jpg" class="d-block w-100" alt="imagen.jpg">
+                <img src="https://www.cdmarket.com.ar/Pubs/Sites/Default/Custom/pcarmada-xs.jpg" class="d-block w-100" alt="imagen.jpg">
+            </a>
+        </div>
+        <div class="carousel-item">
+        <a href="productos.php">
+                <img src="https://www.cdmarket.com.ar/Pubs/Sites/Default/Custom/p-nb-xs.jpg" class="d-block w-100" alt="imagen.jpg">
             </a>
         </div>
     </div>

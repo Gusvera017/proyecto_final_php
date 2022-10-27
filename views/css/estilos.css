@@ -1,7 +1,16 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     background-color: grey !important;
 }
 
 .tac {
+    text-align: center;
+}
+
+.g_image {
+    position: relative;
     text-align: center;
 }

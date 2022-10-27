@@ -20,7 +20,7 @@
                         </div>
                         <div class="form-group mb-3">
                             <label for="descripcion">Descripcion</label>
-                            <input type="text" required class="form-control" value="<?php echo $descripcion_form;?>" name="descripcion" id="descripcion" placeholder="Descripcion del producto">
+                            <textarea type="text" required class="form-control" name="descripcion" id="descripcion" placeholder="Descripcion del producto" rows="3"><?php echo $descripcion_form;?></textarea>
                         </div>
                         <div class="form-group mb-3">
                             <label for="file">Imagen</label>
@@ -57,8 +57,8 @@
                     <?php foreach ($listadoProductos as $prod) { ?>
                     <tr>
                         <td><?php echo $prod['id']; ?></td>
-                        <td><?php echo $prod['nombre']; ?></td>
-                        <td><?php echo $prod['descripcion']; ?></td>
+                        <td><span class="d-inline-block text-truncate" style="max-width: 150px;"><?php echo $prod['nombre']; ?></span></td>
+                        <td><span class="d-inline-block text-truncate" style="max-width: 150px;"><?php echo $prod['descripcion']; ?></span></td>
                         <td>
                             <img class="img-thumbnail" src="./views/img/<?php echo $prod['imagen']; ?>" width="50" alt="imagen.jpg" srcset="">
                         </td>

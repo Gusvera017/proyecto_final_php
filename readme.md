@@ -1,3 +1,6 @@
+# Proyecto final de php
+_El proyecto consiste en un comercio para comprar articulos de tecnologia.
+
 _______________________________________________________________
 
 Estructura de las carpetas(*) y los archivos(+):
